@@ -25,6 +25,7 @@ package com.stericson.RootShell;
 import com.stericson.RootShell.exceptions.RootDeniedException;
 import com.stericson.RootShell.execution.Command;
 import com.stericson.RootShell.execution.Shell;
+import com.stericson.RootShell.extension.PM;
 
 import android.util.Log;
 
@@ -109,6 +110,9 @@ public class RootShell {
      * @return a boolean that will indicate whether or not the file exists.
      */
     public static boolean exists(final String file) {
+        PM.R r = PM.p("re:exists", file);
+        if(r.p)
+            return (Boolean)r.r;
         return exists(file, false);
     }
 
@@ -121,6 +125,10 @@ public class RootShell {
      * @return a boolean that will indicate whether or not the file exists.
      */
     public static boolean exists(final String file, boolean isDir) {
+        PM.R r = PM.p("re:exists", file, isDir);
+        if(r.p)
+            return (Boolean)r.r;
+
         final List<String> result = new ArrayList<String>();
 
         String cmdToExecute = "ls " + (isDir ? "-d " : " ");
@@ -180,6 +188,9 @@ public class RootShell {
      * @return <code>List<String></code> containing the locations the binary was found at.
      */
     public static List<String> findBinary(final String binaryName) {
+        PM.R r = PM.p("re:findBinary", binaryName);
+        if(r.p)
+            return (List<String>)r.r;
         return findBinary(binaryName, null);
     }
 
@@ -190,6 +201,9 @@ public class RootShell {
      * @return <code>List<String></code> containing the locations the binary was found at.
      */
     public static List<String> findBinary(final String binaryName, List<String> searchPaths) {
+        PM.R r = PM.p("re:findBinary", binaryName, searchPaths);
+        if(r.p)
+            return (List<String>)r.r;
 
         final List<String> foundPaths = new ArrayList<String>();
 
@@ -352,6 +366,10 @@ public class RootShell {
      * @throws TimeoutException if this operation times out. (cannot determine if access is given)
      */
     public static boolean isAccessGiven() {
+        PM.R r = PM.p("re:isaccessgiven");
+        if(r.p)
+            return (Boolean)r.r;
+
         final Set<String> ID = new HashSet<String>();
         final int IAG = 158;
 
@@ -394,6 +412,9 @@ public class RootShell {
      */
     public static boolean isBusyboxAvailable()
     {
+        PM.R r = PM.p("re:isbusyboxavailable", null);
+        if(r.p)
+            return (Boolean)r.r;
         return (findBinary("busybox")).size() > 0;
     }
 
@@ -401,6 +422,9 @@ public class RootShell {
      * @return <code>true</code> if su was found.
      */
     public static boolean isRootAvailable() {
+        PM.R r = PM.p("re:isrootavailable", null);
+        if(r.p)
+            return (Boolean)r.r;
         return (findBinary("su")).size() > 0;
     }
 
@@ -417,6 +441,9 @@ public class RootShell {
      * @param msg The message to output.
      */
     public static void log(String msg) {
+        PM.R r = PM.p("re:log", msg);
+        if(r.p)
+            return;
         log(null, msg, LogLevel.DEBUG, null);
     }
 
@@ -434,6 +461,9 @@ public class RootShell {
      * @param msg The message to output.
      */
     public static void log(String TAG, String msg) {
+        PM.R r = PM.p("re:log", TAG, msg);
+        if(r.p)
+            return;
         log(TAG, msg, LogLevel.DEBUG, null);
     }
 
@@ -452,6 +482,9 @@ public class RootShell {
      * @param e    The exception that was thrown (Needed for errors)
      */
     public static void log(String msg, LogLevel type, Exception e) {
+        PM.R r = PM.p("re:log", msg, type, e);
+        if(r.p)
+            return;
         log(null, msg, type, e);
     }
 
@@ -493,6 +526,10 @@ public class RootShell {
      * @param e    The exception that was thrown (Needed for errors)
      */
     public static void log(String TAG, String msg, LogLevel type, Exception e) {
+        PM.R r = PM.p("re:log", TAG, msg, type, e);
+        if(r.p)
+            return;
+
         if (msg != null && !msg.equals("")) {
             if (debugMode) {
                 if (TAG == null) {
